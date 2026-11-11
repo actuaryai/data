@@ -228,7 +228,7 @@ def run(max_seconds):
                 touched.add(tick)
         meta["scanned_to"] = hi
         meta["scanned_to_time"] = datetime.datetime.fromtimestamp(bt[hi], datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if bt.get(hi) else meta.get("scanned_to_time")
-        meta["method"] = "first token per normalised ticker, from Initialize/PairCreated/PoolCreated logs and symbol(); block exact, time interpolated"
+        meta["method"] = "first token per normalised ticker, from Initialize/PairCreated/PoolCreated/Pons launch logs and symbol(); block exact, time interpolated"
         save(meta, first, touched)
         known.update(fresh)
         print(f"{lo}-{hi}: {len(fresh)} tokens read, {len(touched)} tickers set, {len(first)} tickers, {int(time.time() - t0)} s", flush=True)

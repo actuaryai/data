@@ -30,11 +30,14 @@ jobs:
       - name: Count first windows for chain births (tokens the Gate looked up that this collector never saw)
         run: python feeder/births.py 300
         continue-on-error: true
+      - name: Extend the ticker index (first token per ticker, from block 1) to the tip
+        run: python feeder/tickers.py 120
+        continue-on-error: true
       - name: Commit state
         run: |
           git config user.name "actuary-bot"
           git config user.email "actuary-bot@users.noreply.github.com"
-          git add data/state.json data/shards data/symbols.json data/odds.json data/births
+          git add data/state.json data/shards data/symbols.json data/odds.json data/births data/tickers
           if git diff --cached --quiet; then echo "no changes"; else
             git commit -m "data: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
             git push
